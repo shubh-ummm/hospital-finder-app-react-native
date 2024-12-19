@@ -47,3 +47,7 @@ ios/
 # Build
 build/
 *.apk
+
+# Logs
+log.txt
+*.log
