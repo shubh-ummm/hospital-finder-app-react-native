@@ -1,39 +1,73 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { useEffect } from "react";
+import { useRouter, useSegments } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import { View, ActivityIndicator } from "react-native";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const CLERK_PUBLISHABLE_KEY =
+  "pk_test_Y3VyaW91cy1zbmFpbC0xOS5jbGVyay5hY2NvdW50cy5kZXYk";
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+function InitialLayout() {
+  const { isLoaded, isSignedIn } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    if (!isLoaded) return;
 
-  if (!loaded) {
-    return null;
+    const inTabsGroup = segments[0] === "(tabs)";
+    const inAuthGroup = segments[0] === "LoginScreen";
+
+    if (isSignedIn && !inTabsGroup) {
+      // Redirect to home if user is signed in and not in tabs
+      router.replace("/(tabs)");
+    } else if (!isSignedIn && !inAuthGroup) {
+      // Redirect to login if user is not signed in and not in auth group
+      router.replace("/LoginScreen");
+    }
+  }, [isLoaded, isSignedIn, segments]);
+
+  if (!isLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#278a84" />
+      </View>
+    );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="LoginScreen" />
+    </Stack>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ClerkProvider
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+      tokenCache={tokenCache}
+    >
+      <InitialLayout />
+    </ClerkProvider>
   );
 }

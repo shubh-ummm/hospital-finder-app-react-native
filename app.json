@@ -1,41 +1,81 @@
 {
   "expo": {
-    "name": "hospital-finder",
+    "name": "WeCare",
     "slug": "hospital-finder",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./assets/images/2.png",
+    "scheme": "wecare",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/images/2.png",
+      "bundleIdentifier": "com.wecare.hospitalfinder",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "WeCare needs your location to find nearby hospitals.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "WeCare needs your location to find nearby hospitals.",
+        "UIBackgroundModes": ["location", "fetch"]
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/2.png",
         "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ],
+      "package": "com.wecare.hospitalfinder",
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "${process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY}"
+        }
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/2.png"
     },
     "plugins": [
       "expo-router",
       [
-        "expo-splash-screen",
+        "expo-location",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "locationAlwaysAndWhenInUsePermission": "WeCare needs your location to find nearby hospitals.",
+          "locationAlwaysPermission": "WeCare needs your location to find nearby hospitals.",
+          "locationWhenInUsePermission": "WeCare needs your location to find nearby hospitals."
         }
       ]
     ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "667c4476-f76d-41e4-93fe-ca811214872c"
+      }
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/667c4476-f76d-41e4-93fe-ca811214872c"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "newArchEnabled": true
   }
 }

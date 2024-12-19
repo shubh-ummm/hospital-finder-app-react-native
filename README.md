@@ -1,50 +1,147 @@
-# Welcome to your Expo app 👋
+# WeCare - Hospital Finder App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application that helps users find nearby hospitals and medical facilities. Built with Expo and React Native, the app provides real-time location-based hospital search with an interactive map interface.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 🏥 Real-time nearby hospital search
+- 📍 Interactive Google Maps integration
+- 🔍 Search functionality with autocomplete
+- 📱 Modern and responsive UI
+- 🔐 Google authentication
+- 📍 Current location tracking
+- 🗺️ Hospital details with directions
+- 💫 Smooth animations and transitions
 
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- [npm](https://www.npmjs.com/) (v8 or higher)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/) (latest version)
+- [Android Studio](https://developer.android.com/studio) (for Android development)
+- [Xcode](https://developer.apple.com/xcode/) (for iOS development, macOS only)
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/hospital-finder.git
+   cd hospital-finder
+   ```
+
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. Create environment variables:
    ```bash
-    npx expo start
+   cp .env.example .env
+   ```
+   Update the `.env` file with your API keys:
+   - Get a Google Maps API key from [Google Cloud Console](https://console.cloud.google.com/)
+   - Get a Clerk publishable key from [Clerk Dashboard](https://dashboard.clerk.dev/)
+
+4. Start the development server:
+   ```bash
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Building the App
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### Development Build
 ```bash
-npm run reset-project
+eas build -p android --profile preview
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Production Build
+```bash
+eas build -p android --profile production
+```
 
-## Learn more
+## Dependencies
 
-To learn more about developing your project with Expo, look at the following resources:
+### Core Dependencies
+- expo: ~52.0.18
+- react: 18.3.1
+- react-native: 0.76.5
+- expo-router: ^4.0.11
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### UI and Components
+- @expo/vector-icons: ^14.0.2
+- react-native-maps: 1.18.0
+- react-native-google-places-autocomplete: ^2.5.6
 
-## Join the community
+### Authentication and Storage
+- @clerk/clerk-expo: ^2.6.5
+- expo-secure-store: ~14.0.0
+- expo-web-browser: ~14.0.1
 
-Join our community of developers creating universal apps.
+### Navigation
+- @react-navigation/bottom-tabs: ^7.2.0
+- @react-navigation/native: ^7.0.14
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Location Services
+- expo-location: ~18.0.4
+
+### API and Data Handling
+- axios: ^1.7.9
+
+### Development Dependencies
+- @babel/core: ^7.25.2
+- typescript: ^5.3.3
+- jest-expo: ~52.0.2
+
+## Project Structure
+
+```
+hospital-finder/
+├── app/
+│   ├── (tabs)/
+│   │   ├── index.jsx
+│   │   └── UserProfile.jsx
+│   ├── components/
+│   │   ├── Card.jsx
+│   │   ├── SearchBar.jsx
+│   │   └── PlaceListView.jsx
+│   ├── Context/
+│   │   ├── UserLocationContext.js
+│   │   └── SelectMarkerContext.js
+│   └── Utils/
+│       └── GlobalAPI.js
+├── assets/
+│   └── images/
+├── .env.example
+└── app.json
+```
+
+## Environment Variables
+
+Required environment variables:
+```env
+EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Google Maps Platform for location services
+- Clerk for authentication services
+- Expo team for the amazing development framework
+
+## Support
+
+For support, email your.email@example.com or open an issue in the repository.
